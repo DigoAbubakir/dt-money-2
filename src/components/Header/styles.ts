@@ -12,7 +12,6 @@ export const HeaderContent = styled.div `
  max-width: 1120px;
  margin: 0 auto;
  padding: 0 1.5rem;
-
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -31,6 +30,44 @@ cursor: pointer;
 &:hover {
     background: ${props => props.theme["green-700"]};
     transition: 0.2s;
-    
+}
+`;
+
+export const EditButton = styled.button`
+display: flex;
+align-items: center;
+justify-content: center;
+height: 35px;
+width: 35px;
+border: 0;
+background: ${props => props.theme["green-500"]};
+color: ${props => props.theme.white};
+padding: 0;
+border-radius: 6px;
+cursor: pointer;
+
+&:hover {
+    background: ${props => props.theme["green-700"]};
+    transition: 0.2s;
+}
+`;
+
+export const DeleteButton = styled.button`
+display: flex;
+align-items: center;
+justify-content: center;
+height: 35px;
+width: 35px;
+border: 0;
+background: ${props => props.theme["red-500"]};
+color: ${props => props.theme.white};
+padding: 0;
+border-radius: 6px;
+margin-left: 0.26rem;
+cursor: pointer;
+
+&:hover {
+    background: ${props => props.theme["red-700"]};
+    transition: 0.2s;
 }
 `;
