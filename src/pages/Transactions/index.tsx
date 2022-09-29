@@ -13,6 +13,7 @@ import {
 import { NewTransactionModal } from "../../components/NewTransactionModal";
 import AlertDialogTransaction from "../../components/Dialog";
 import { EditTransactionModal } from "../../components/EditTransactionModal";
+import { Row } from "../../components/Row";
 
 export function Transactions() {
   return (
@@ -25,38 +26,7 @@ export function Transactions() {
 
         <TransactionsTable>
           <tbody>
-
-            <tr>
-              <td width="50%">Hamburger</td>
-              <td>
-                <PriceHighlight variant="outcome">- R$ 59,00</PriceHighlight>
-              </td>
-              <td>Alimentação</td>
-              <td>10/04/2022</td>
-              <td>
-                <OptionsButton>
-                  <Dialog.Root>
-                    <Dialog.Trigger asChild>
-                      <EditButton>
-                        <Pencil1Icon />
-                      </EditButton>
-                    </Dialog.Trigger>
-
-                    <EditTransactionModal />
-                  </Dialog.Root>
-
-                  <Dialog.Root>
-                    <Dialog.Trigger asChild>
-                      <DeleteButton>
-                        <TrashIcon />
-                      </DeleteButton>
-                    </Dialog.Trigger>
-
-                    <AlertDialogTransaction />
-                  </Dialog.Root>
-                </OptionsButton>
-              </td>
-            </tr>
+            <Row description="Marmitex" price={10.00} category="Alimentação" type="INCOME"  />
           </tbody>
         </TransactionsTable>
       </TransactionsContainer>
