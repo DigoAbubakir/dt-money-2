@@ -6,18 +6,21 @@ import { EditTransactionModal } from "../EditTransactionModal";
 import { DeleteButton, EditButton } from "../Header/styles";
 
 type TransactionType = {
-    description: string;
-    price: number;
-    category: string;
-    type: string;
-}
+  id: number;
+  description: string;
+  price: string;
+  category: string;
+  type: string;
+};
 
-export function Row({ description, price, category, type }: TransactionType) {
+export function Row({id, description, price, category, type }: TransactionType) {
   return (
     <tr>
       <td width="50%">{description}</td>
       <td>
-        <PriceHighlight variant={type === 'INCOME' ? 'income' : 'outcome'}>{price}</PriceHighlight>
+        <PriceHighlight variant={type === "INCOME" ? "income" : "outcome"}>
+          {price}
+        </PriceHighlight>
       </td>
       <td>{category}</td>
       <td>10/04/2022</td>
@@ -40,7 +43,7 @@ export function Row({ description, price, category, type }: TransactionType) {
               </DeleteButton>
             </Dialog.Trigger>
 
-            <AlertDialogTransaction />
+            <AlertDialogTransaction id={id} />
           </Dialog.Root>
         </OptionsButton>
       </td>

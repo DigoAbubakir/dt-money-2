@@ -10,29 +10,58 @@ import {
   TextContent,
 } from "./styles";
 import { X } from "phosphor-react";
+import { useMutation } from "react-query";
+import { api } from "../../service/api";
+import { queryClient } from "../../service/queryClient";
 
-const AlertDialogTransaction = () => (
-  <Dialog.Portal>
-    <Overlay />
+type PropsDialogTransaction = {
+  id: number;
+};
 
-    <Content>
-      <Dialog.Title>Deletar Transação</Dialog.Title>
+function useDeleteTransaction() {
+  return useMutation(async (transactionId: number) => {
+    const response = await api.delete(`/transaction/${transactionId}`)
+    return response.data.user;
+  }, {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['transactions'])
+    }, onError: (err: any) => {
+    
+    }
+  });
+}
 
-      <CloseButton>
-        <X size={24} />
-      </CloseButton>
+const AlertDialogTransaction = ({ id }: PropsDialogTransaction) => {
 
-      <TextContent>
-        Essa ação não pode ser desfeita. Isso vai deletar permanentemente a transação da base de dados, deseja prosseguir?
-      </TextContent>
+  const deleteTransaction = useDeleteTransaction();
 
-      <ContentButton>
-        <button>Cancelar</button>
-        <button>Deletar</button>
-      </ContentButton>
-      
-    </Content>
-  </Dialog.Portal>
-);
+  function handleDeleteTransaction(id: number): void {
+     deleteTransaction.mutate(id)
+  }
+
+  return (
+    <Dialog.Portal>
+      <Overlay />
+
+      <Content>
+        <Dialog.Title>Deletar Transação</Dialog.Title>
+
+        <CloseButton>
+          <X size={24} />
+        </CloseButton>
+
+        <TextContent>
+          Essa ação não pode ser desfeita. Isso vai deletar permanentemente a
+          transação da base de dados, deseja prosseguir?
+        </TextContent>
+
+        <ContentButton>
+          <button>Cancelar</button>
+          <button onClick={() => handleDeleteTransaction(id)}>Deletar</button>
+        </ContentButton>
+      </Content>
+    </Dialog.Portal>
+  );
+};
 
 export default AlertDialogTransaction;
