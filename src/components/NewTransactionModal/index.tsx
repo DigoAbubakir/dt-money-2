@@ -1,41 +1,97 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
-import { CloseButton, Content, Overlay, TransactionType, TransactionTypeButton } from "./styles";
+import {
+  CloseButton,
+  Content,
+  Overlay,
+  TransactionType,
+  TransactionTypeButton,
+} from "./styles";
+import { Formik, Field } from "formik";
+import { useCreateTransaction } from "../../hooks/useCreateTransation";
+import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
+import { useState } from "react";
+
+const initialValues = {
+  description: "",
+  price: "",
+  category: "",
+  type: "",
+};
 
 export function NewTransactionModal() {
-    return (
-        <Dialog.Portal>
-              <Overlay />
+  const [open, setOpen] = useState(true);
+  
+  const createTransaction = useCreateTransaction();
 
-              <Content>
-                <Dialog.Title>Nova Transação</Dialog.Title>
+  const handleCreateTransaction = async (values: any) => {
+    createTransaction.mutate(values);
+  };
 
-                <CloseButton>
-                    <X size={24}/>
-                </CloseButton>
+  return (
+    <Dialog.Portal>
+      <Overlay />
 
-                <form action="">
-                    <input type="text" placeholder="Descrição" required/>
-                    <input type="number" placeholder="Preço" required/>
-                    <input type="text" placeholder="Categoria" required/>
+      <Content>
+        <Dialog.Title>Nova Transação</Dialog.Title>
 
-                    <TransactionType>
-                        <TransactionTypeButton variant="income" value="income">
-                            <ArrowCircleUp size={24}/>
-                            Entrada
-                        </TransactionTypeButton>
+        <CloseButton>
+          <X size={24} />
+        </CloseButton>
 
-                        <TransactionTypeButton variant="outcome" value="outcome">
-                            <ArrowCircleDown size={24}/>
-                            Saída
-                        </TransactionTypeButton>
-                    </TransactionType>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleCreateTransaction}
+        >
+          {({ handleSubmit, handleChange, values, resetForm }) => (
+            <>
+              <form action="" onSubmit={handleSubmit}>
+                <input
+                  name="description"
+                  type="text"
+                  placeholder="Descrição"
+                  onChange={handleChange}
+                  value={values.description}
+                />
 
-                    <button type="submit">
-                        Cadastrar
-                    </button>
-                </form>
-              </Content>
-            </Dialog.Portal>
-    )
+                <input
+                  name="price"
+                  type="number"
+                  placeholder="Preço"
+                  onChange={handleChange}
+                  value={values.price}
+                />
+
+                <input
+                  name="category"
+                  type="text"
+                  placeholder="Categoria"
+                  onChange={handleChange}
+                  value={values.category}
+                />
+
+                <TransactionType>
+                  <TransactionTypeButton variant="income" value="INCOME">
+                    <Field type="radio" name="type" value="INCOME" />
+                    <ArrowCircleUp size={24} />
+                    Entrada
+                  </TransactionTypeButton>
+
+                  <TransactionTypeButton variant="outcome" value="OUTCOME">
+                    <Field type="radio" name="type" value="OUTCOME" />
+                    <ArrowCircleDown size={24} />
+                    Saída
+                  </TransactionTypeButton>
+                </TransactionType>
+
+                
+                  <button type="submit">Cadastrar</button>
+                
+              </form>
+            </>
+          )}
+        </Formik>
+      </Content>
+    </Dialog.Portal>
+  );
 }
