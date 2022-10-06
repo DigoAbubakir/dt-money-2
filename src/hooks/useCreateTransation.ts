@@ -25,6 +25,7 @@ export function useCreateTransaction() {
     {
       onSuccess: async () => {
         await queryClient.invalidateQueries(["transactions"]);
+        await queryClient.invalidateQueries(["dashboard"]);
       },
       onError: (error: AxiosError<ErrorType>) => {
         console.log("DEU ERRO")!

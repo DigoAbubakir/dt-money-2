@@ -17,16 +17,18 @@ import { TransactionsContainer, TransactionsTable } from "./styles";
 import { Row } from "../../components/Row";
 import { useTransactions } from "../../hooks/useTransactions";
 import { numberFormat } from "../../utils/utils";
+import { useDashboard } from "../../hooks/useDashBoard";
 
 export function Transactions() {
   const { data: transactions, isFetching, error } = useTransactions();
+  const { data: dashboard } = useDashboard();
 
-  console.log(transactions);
+  console.log(dashboard)
 
   return (
     <div>
       <Header />
-      <Summary />
+      <Summary income={Number(dashboard?.income)} outcome={Number(dashboard?.outcome)} total={Number(dashboard?.total)} />
 
       <TransactionsContainer>
         <SearchForm />
