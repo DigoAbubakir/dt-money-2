@@ -17,7 +17,7 @@ export function Summary({ income, outcome, total } : SumaryProps) {
                   <ArrowCircleUp size={32} color="#00b37e" />
                 </header>
 
-                <strong>{numberFormat(income)}</strong>
+                <strong>{income ? numberFormat(income) : numberFormat(0)}</strong>
             </SummaryCard>
 
             <SummaryCard>
@@ -26,7 +26,7 @@ export function Summary({ income, outcome, total } : SumaryProps) {
                   <ArrowCircleDown size={32} color="#f75a68" />
                 </header>
 
-                <strong>{numberFormat(outcome)}</strong>
+                <strong>{outcome ? numberFormat(outcome) : numberFormat(0)}</strong>
             </SummaryCard>
 
             <SummaryCard variant="green">
@@ -35,7 +35,7 @@ export function Summary({ income, outcome, total } : SumaryProps) {
                   <CurrencyDollar size={32} color="#fff" />
                 </header>
 
-                <strong>{numberFormat(total)}</strong>
+                <strong>{total ? numberFormat(total) : numberFormat(0)}</strong>
             </SummaryCard>
         </SummaryContainer>
     )

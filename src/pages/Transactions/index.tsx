@@ -23,8 +23,6 @@ export function Transactions() {
   const { data: transactions, isFetching, error } = useTransactions();
   const { data: dashboard } = useDashboard();
 
-  console.log(dashboard)
-
   return (
     <div>
       <Header />
